@@ -1,0 +1,239 @@
+/****************************************************************************
+* Notice:      Copyright (c) Montage Techonoloy Corporation (2009).
+*              All rights reserved.
+* Owner:       Kevin Li <kai.li@montage-tech.com>
+*              Mark Wu <mark.wu@montage-tech.com>
+****************************************************************************/
+#include "ui_common.h"
+#include "Z_lvcm.h"
+//#include "Z_zhaomeng.h"
+#include "Z_whm.h"
+#include "Z_XUXIN.h"
+#include "Z_lxd.h"
+#define RGB24TORGB565(RGB24)     (u16)((((((RGB24&0xff0000)>>16)&0xf8)>>3)<<11) | \
+									(((((RGB24&0xff00)>>8)&0xfc)>>2)<<5) | \
+									((RGB24&0xff)&0xf8)>>3)
+
+
+
+
+	
+rsc_rstyle_t c_tab[MAX_RSTYLE_CNT] =
+{
+  // RSI_IGNORE
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE} },
+
+	LVCM_RSI_STYLE
+	WHM_RSI_STYLE
+   RSI_XUXIN_STYLE
+    LXD_RSI_STYLE
+
+	//SN_RSI_POP_MODAL
+  {{R_ICON,IM_SN_DLG_BG_LT},
+  	{R_IGNORE, R_IGNORE},
+  	{R_ICON,IM_SN_DLG_BG_RT},
+	  {R_IGNORE, R_IGNORE},
+  	{R_ICON,IM_SN_DLG_BG_MT},
+  	//{R_COLOR,(0x120d)},
+  {R_IGNORE, R_IGNORE},
+	  {R_IGNORE, R_IGNORE},
+	  {R_IGNORE, R_IGNORE},
+	  {R_IGNORE, R_IGNORE}},
+
+  //SN_RSI_BNT_TEXT_HL
+  {{R_IGNORE,R_IGNORE},
+  	{R_ICON,IM_SN_OK_BTN_FOCUS_MT},
+  	{R_IGNORE,R_IGNORE},
+  	{R_ICON,R_IGNORE},
+  	{R_IGNORE,R_IGNORE},
+  	{R_ICON,IM_SN_OK_BTN_FOCUS_LT},
+  	{R_ICON,IM_SN_OK_BTN_FOCUS_RT},
+  	{R_IGNORE,R_IGNORE},
+  	{R_IGNORE,R_IGNORE}},
+  	
+   //SN_RSI_BNT_TEXT_SH
+  {{R_IGNORE,R_IGNORE},
+  	{R_ICON,IM_SN_OK_BTN_SHOW_MT},
+  	{R_IGNORE,R_IGNORE},
+  	{R_ICON,R_IGNORE},
+  	{R_IGNORE,R_IGNORE},
+  	{R_ICON,IM_SN_OK_BTN_SHOW_LT},
+  	{R_ICON,IM_SN_OK_BTN_SHOW_RT},
+  	{R_IGNORE,R_IGNORE},
+  	{R_IGNORE,R_IGNORE}},
+
+  // RSI_TRANSPARENT
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER, C_TRANS}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE} },
+
+  // RSI_ITEM_3_SH
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER , C_BLUE_TRANS}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_WINDOW_1
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER , C_BLUE_TRANS}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_WINDOW_2
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER , C_WHITE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_ITEM_7_SH
+  { {R_LINE4,C_WHITE}, {R_LINE4,C_WHITE}, {R_LINE4,C_WHITE}, {R_LINE4,C_WHITE}, {R_FILL_RECT_TO_VERTEX , C_BLUE_LIGHT}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_ITEM_4_SEL
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER , C_BLUE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_WHITE_YELLOW
+  { {R_IGNORE , R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_VERTEX, C_WHITE_YELLOW}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}},
+
+  //RSI_ORANGE
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER , C_ORANGE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_GREEN
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_VERTEX, C_GREEN}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}},
+
+  // RSI_PROGRESS_BAR_BG
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_ICON_TO_BORDER , IM_SN_SOUND_STATE_BAR_MID}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_NEW_PSW
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_OLD_PSW
+  { {R_ICON , IM_SN_BAR_YELLOW_LT}, {R_IGNORE}, {R_ICON , IM_SN_BAR_YELLOW_RT}, {R_IGNORE}, {R_FILL_ICON_TO_BORDER , IM_SN_BAR_YELLOW_MT}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  //RSI_COMM_PBAR_MID
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_ICON_TO_BORDER , IM_SN_SOUND_STATE_BAR_BG_MID}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_GAME_BG1
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_VERTEX , C_GREEN}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  // RSI_GAME_BG2
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_VERTEX,  C_GAME_ORANGE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  //RSI_GAME_INFO1
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_VERTEX, C_GAME_GRAY}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}},
+
+  // RSI_CHESS_ITEM1
+  { {R_LINE1, C_BLACK}, {R_LINE1, C_BLACK}, {R_LINE1, C_BLACK}, {R_LINE1, C_BLACK}, {R_FILL_RECT_TO_BORDER, C_GAME_ORANGE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}},
+
+  // RSI_MOSAIC_YELLOW
+  { {R_LINE7,C_YELLOW}, {R_LINE7,C_YELLOW}, {R_LINE7,C_YELLOW}, {R_LINE7,C_YELLOW}, {R_FILL_RECT_TO_VERTEX , C_TRANS}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+
+  //RSI_WHITE
+  {{R_IGNORE},{R_IGNORE},{R_IGNORE},{R_IGNORE},{R_FILL_RECT_TO_BORDER, C_WHITE},{R_IGNORE},{R_IGNORE},{R_IGNORE},{R_IGNORE}},
+
+  #if(CONFIG_CAS_ID == CONFIG_CAS_ID_SV)
+  //RSI_FINGER_BG
+  { {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_FILL_RECT_TO_BORDER , C_FINGER_BG}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE}, {R_IGNORE }},
+  #endif
+};
+
+font_map_t f_map_tab[] =
+{
+  { FONT_ID_1, FONT_ENGLISH, FONT_BUFFER_COMMON, 0, NULL },
+  { FONT_ID_2, FONT_NUMBER,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_1, FONT_CHINESE, FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_3, FONT_NUMBER_BIG, FONT_BUFFER_LOCAL, 0, NULL },
+  #if(CONFIG_CAS_ID != CONFIG_CAS_ID_SV)
+  { FONT_ID_4, FONT_ENGLISH_BIG, FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_4, FONT_CHINESE_BIG, FONT_BUFFER_LOCAL, 0, NULL },
+  #else
+  { FONT_ID_FG1, FONT_FINGER7,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG2, FONT_FINGER10,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG3, FONT_FINGER13,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG4, FONT_FINGER16,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG5, FONT_FINGER19,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG6, FONT_FINGER22,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG7, FONT_FINGER24,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG8, FONT_FINGER26,  FONT_BUFFER_LOCAL, 0, NULL },  
+  { FONT_ID_FG9, FONT_FINGER28,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG10, FONT_FINGER31,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG11, FONT_FINGER34,  FONT_BUFFER_LOCAL, 0, NULL },
+  { FONT_ID_FG12, FONT_FINGER37,  FONT_BUFFER_LOCAL, 0, NULL },
+  #endif
+};
+
+#define FONTMAP_CNT    sizeof(f_map_tab) / sizeof(font_map_t)
+
+rsc_fstyle_t f_tab[MAX_FSTYLE_CNT] =
+{
+  //FSI_INDEX1
+  { FONT_ID_1, 0, C_WHITE},
+  //FSI_INDEX2
+  { FONT_ID_1, 0, C_WHITE},
+  //FSI_INDEX3
+  { FONT_ID_1, 0, C_WHITE},
+  //FSI_INDEX4
+  { FONT_ID_1, 0, C_BLACK},
+  //FSI_GRAY
+  { FONT_ID_1, 0, C_GRAY      },
+  //FSI_WHITE
+  { FONT_ID_1, 0, C_WHITE     },
+  //FSI_NUMBER
+  { FONT_ID_2, 0, C_WHITE},
+  //FSI_RESERVE2
+  { FONT_ID_1, 0, 0},
+  //FSI_RESERVE3
+  { FONT_ID_1, 0, 0},
+  //FSI_RESERVE4
+  { FONT_ID_2, 0, 0},
+  //FSI_NUMBER_BIG
+  { FONT_ID_3, 0, C_WHITE},
+  #if(CONFIG_CAS_ID != CONFIG_CAS_ID_SV)
+  //FSI_CHINESE_BIG
+  { FONT_ID_4, 0, C_WHITE},
+  #else
+  //FSI_FINGER1
+  { FONT_ID_FG1, 0, C_FINGER_FRONT },
+  //FSI_FINGER2
+  { FONT_ID_FG2, 0, C_FINGER_FRONT },
+  //FSI_FINGER3
+  { FONT_ID_FG3, 0, C_FINGER_FRONT },
+  //FSI_FINGER4
+  { FONT_ID_FG4, 0, C_FINGER_FRONT },
+  //FSI_FINGER5
+  { FONT_ID_FG5, 0, C_FINGER_FRONT },
+  //FSI_FINGER6
+  { FONT_ID_FG6, 0, C_FINGER_FRONT },
+  //FSI_FINGER7
+  { FONT_ID_FG7, 0, C_FINGER_FRONT },
+  //FSI_FINGER8
+  { FONT_ID_FG8, 0, C_FINGER_FRONT },
+  //FSI_FINGER9
+  { FONT_ID_FG9, 0, C_FINGER_FRONT },
+  //FSI_FINGER10
+  { FONT_ID_FG10, 0, C_FINGER_FRONT },
+  //FSI_FINGER11
+  { FONT_ID_FG11, 0, C_FINGER_FRONT },
+  //FSI_FINGER12
+  { FONT_ID_FG12, 0, C_FINGER_FRONT },
+  #endif
+};
+
+rsc_config_t g_rsc_config =
+{
+  512,         // common data buf size
+  80 * 640 * 2,    //max bitmap size,every pixel cost 2 Byte//back 336
+  0,           //max language size,every char cast 2 Bytes
+  4 * 256,     //palette size,every color cost 4 Bytes
+  0,           //must bigger than latin font size
+  0,           //must bigger than GB2312 font size
+  0,           // script buffer size
+  #if(CONFIG_CAS_ID != CONFIG_CAS_ID_SV)
+  32 * 48 *2,// 24 * 24 *2,     //cache buffer size,every pixel cost 2 Byte
+  #else
+  (61 * ((37 * 16 + 7) >> 3)),
+  #endif
+  10,          //cache buffer length
+  0,           //offset for block
+  0,           //flash base addr
+  RSTYLE_CNT,
+  c_tab,
+  FSTYLE_CNT,
+  f_tab,
+  FONTMAP_CNT,
+  f_map_tab,
+  #if(SYS_MEMORY_TOTALT_SIZE == SYS_MEMORY_TOTALT_SIZE_32M)
+  (2048 + 512)* KBYTES,
+  #else
+  1024 * KBYTES,
+  #endif
+  TRUE
+};

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="core_canna_except_open" />
+		<Option pch_mode="2" />
+		<Option compiler="csky" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin\Release\libcore_canna_except_open" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj\Release\" />
+				<Option type="2" />
+				<Option compiler="csky" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-mbig-endian -g -O2 -Wall -Werror -ffunction-sections -DCACHE_ENABLE=1 -DCRT0_STK_SIZE=8192 -DDRV_SEL_AUDIO -DDRV_SEL_AVSYNC -DDRV_SEL_BUFFER -DDRV_SEL_GLOBAL -DDRV_SEL_GPI -DDRV_SEL_GPIO -DDRV_SEL_IRDA -DDRV_SEL_LEDKB -DDRV_SEL_OSD -DDRV_SEL_SUB -DDRV_SEL_VIDEO -DDRV_SEL_SPIC -DDRV_SEL_BPIC -DDRV_SEL_OTP -DDRV_SEL_PTI -DDRV_SEL_SMC -DDRV_SEL_TIMER -DDRV_SEL_UART -DDRV_SEL_WATCHDOG -DDRV_SEL_FLASH" />
+					<Add option='-MMD -MP -MF&quot;$object.d&quot; -MT&quot;$object.d&quot;' />
+					<Add option="-DMETHOD0=0" />
+					<Add option="-DJAZZ" />
+					<Add option="-DJAZZ_MINGXIN" />
+					<Add option="-DMETHODS=1" />
+					<Add option="-DOPTIMIZE=METHODS" />
+					<Add option="-DCKCORE" />
+					<Add directory='&quot;${PROJECT_LOC}\inc&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\ap&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\drv&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\hal&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\mdl&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\os&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\util&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\firmware&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\drv\bus&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\drv\drvbase&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\hal\arch&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\util\log&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\mdl\mmi&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\mdl\eva&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\mdl\filters&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\inc\kware&quot;' />
+					<Add directory='&quot;${PROJECT_LOC}\test\drvtest_code\testframework&quot;' />
+				</Compiler>
+				<ExtraCommands>
+					<Add after="sh ../linux_link_core_canna.sh core_canna_except_open" />
+					<Mode after="always" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="PROJECT_LOC" value="${PROJECT_DIR}..\..\..\.." />
+				</Environment>
+			</Target>
+		</Build>
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="..\..\..\..\test\drvtest_code\jazz_drvtest_cmd\shell.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\..\test\drvtest_code\modules\drv\dmx_cmd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\..\test\drvtest_code\testframework\testfm_console.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\..\test\drvtest_code\testframework\testfm_db.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\..\test\drvtest_code\testframework\testfm_op.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

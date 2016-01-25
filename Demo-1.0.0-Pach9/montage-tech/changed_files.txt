@@ -1,0 +1,1 @@
+patching file inc/hal/hal_otp.h

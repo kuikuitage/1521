@@ -1,0 +1,30 @@
+#############<-- Set all the variables -->##############please change############
+#!/bin/sh
+CORENAME=$1
+LIB_CORENAME=lib${CORENAME}.a
+DES_CORE_NAME=core_ginkgo
+WORK_PATH=$(cd "$(dirname "$0")"; pwd) 
+LIB_PATH=${WORK_PATH}/${CORENAME}/bin/Release
+RELEASE_PATH=../../../lib/lib_warriors
+
+#############<-- copy lib to a common place -->##############
+cp ${LIB_PATH}/${LIB_CORENAME} ./../
+cd ./../
+cp ${RELEASE_PATH}/lib${DES_CORE_NAME}.a ./
+
+#############<-- split .a to .o -->##############
+ar -x $LIB_CORENAME
+
+#############<-- update .o into .a -->##############
+
+ar -r lib${DES_CORE_NAME}.a *.o
+
+#############<-- delete the old object file -->##############
+rm *.o
+
+#############<-- copy libcore_goby.a to lib content -->##############
+
+cp lib${DES_CORE_NAME}.a $RELEASE_PATH
+
+#############<-- copy libcore_goby.a to lib content -->##############
+rm -f lib${DES_CORE_NAME}.a

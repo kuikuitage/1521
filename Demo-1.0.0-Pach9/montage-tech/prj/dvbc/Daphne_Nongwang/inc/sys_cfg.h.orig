@@ -1,0 +1,300 @@
+/**********************************************************************/
+/* Copyright (c) 2008 Montage Tech - All Rights Reserved              */
+/**********************************************************************/
+#ifndef __SYS_CFG_H_
+#define __SYS_CFG_H_
+
+#ifdef CHIP
+#define SYS_CPU_CLOCK         (166 * 1000000)
+#else
+#define SYS_CPU_CLOCK         (81 * 1000000)
+#endif
+
+#define SYS_FLASH_TOTALT_SIZE_8M      0x800000
+#define SYS_FLASH_TOTALT_SIZE_4M      0x400000
+#define SYS_FLASH_TOTALT_SIZE_2M      0x200000
+
+#ifdef SYS_FLASH_8M
+#define SYS_FLASH_TOTALT_SIZE SYS_FLASH_TOTALT_SIZE_8M
+#endif
+#ifdef SYS_FLASH_4M
+#define SYS_FLASH_TOTALT_SIZE SYS_FLASH_TOTALT_SIZE_4M
+#endif
+#ifdef SYS_FLASH_2M
+#define SYS_FLASH_TOTALT_SIZE SYS_FLASH_TOTALT_SIZE_2M
+#endif
+
+#if (!defined(SYS_FLASH_4M) && !defined(SYS_FLASH_2M) && !defined(SYS_FLASH_8M))
+#define SYS_FLASH_TOTALT_SIZE SYS_FLASH_TOTALT_SIZE_2M
+#endif
+
+#define SYS_FLASH_END  SYS_FLASH_TOTALT_SIZE
+
+#define SYS_MEMORY_TOTALT_SIZE_32M  0x2000000
+#define SYS_MEMORY_TOTALT_SIZE_16M  0x1000000
+#define SYS_MEMORY_TOTALT_SIZE_8M    0x800000
+#ifdef SYS_FLASH_8M
+#ifndef SYS_MEM_32M
+#define SYS_MEM_32M /***make sure ota memory is full***/
+#endif
+#endif
+
+#ifdef SYS_FLASH_4M
+#ifndef SYS_MEM_32M
+#define SYS_MEM_32M /***make sure ota memory is full***/
+#endif
+#endif
+
+#ifdef SYS_MEM_32M
+#define SYS_MEMORY_TOTALT_SIZE SYS_MEMORY_TOTALT_SIZE_32M
+#endif
+
+#ifdef SYS_MEM_16M
+#define SYS_MEMORY_TOTALT_SIZE SYS_MEMORY_TOTALT_SIZE_16M
+#endif
+
+#ifdef SYS_MEM_8M
+#define SYS_MEMORY_TOTALT_SIZE SYS_MEMORY_TOTALT_SIZE_8M
+#endif
+
+#if (!defined(SYS_MEM_8M) && !defined(SYS_MEM_32M) && !defined(SYS_MEM_16M) )
+#define SYS_MEMORY_TOTALT_SIZE SYS_MEMORY_TOTALT_SIZE_16M
+#endif
+
+
+
+
+/*!
+   Task priority
+  */
+typedef enum
+{
+  SYS_INIT_TASK_PRIORITY = 2,
+  SYS_TIMER_TASK_PRIORITY = 3,
+
+  MDL_SUBT_TASK_PRIORITY = 4,
+  SYS_CONSOLE_PRIORITY = 5,
+  OS_MUTEX_PRIORITY = 6,
+
+  AP_FRM_TASK_PRIORITY = 10,
+  UI_FRM_TASK_PRIORITY,
+
+  //MDL_CA_TASK_PRIORITY,
+  AP_ADS_TASK_PRIORITY = 13,
+  //DRV_SMC_TASK_PRIORITY = 12,
+  DRV_SMC_TASK_PRIORITY = 14,
+  //SOWELL_TASK_PRIORITY,
+  //13---19 TEMP tf ca tas,
+  //DRV_CAS_ADAPTER_TASK_PRIORITY = 20,
+
+  AP_HIGHEST_TASK_PRIORITY = 19,
+  AP_NVOD_TASK_PRIORITY = 20,
+  EVA_SYS_TASK_PRIORITY = 21,
+  AP_TIME_TASK_PRIORITY = 22,
+  AP_UIO_TASK_PRIORITY = 23,
+  AP_PLAYBACK_TASK_PRIORITY = 24,
+  AP_PICTURE_TASK_PRIORITY = 25,
+  AP_CAS_TASK_PRIORITY = 26,
+  //AP_CA_TASK_PRIORITY,
+  AP_SCAN_TASK_PRIORITY = 27,
+  //AP_MULTI_PIC_TASK_PRIORITY,
+  AP_SIGN_MON_TASK_PRIORITY = 28,
+  AP_EPG_TASK_PRIORITY = 29,
+  //AP_UPGRADE_TASK_PRIORITY,
+  AP_BROWSE_TASK_PRIORITY = 30,
+  //AP_SATCODX_TASK_PRIORITY,
+  AP_OTA_TASK_PRIORITY = 31,
+  DRV_CAS_ADAPTER_TASK_PRIORITY = 32,
+  
+//34---40 TEMP tf ca task
+  DRV_CAS_MODUL_TASK_PRIORITY_START = 34,
+  DRV_CAS_MODUL_TASK_PRIORITY_END = 40,
+      
+  PICTURE_CHAIN_1_PRIORITY = 41,
+  PICTURE_CHAIN_2_PRIORITY,
+  
+  MDL_VBI_TASK_PRIORITY = 43,
+  MDL_DVB_TASK_PRIORITY,
+  MDL_NIM_CTRL_TASK_PRIORITY,
+  
+  MDL_MONITOR_TASK_PRIORITY = 46, // don't change it
+
+  MDL_DM_MONITOR_TASK_PRIORITY,
+  CUSTOMER_TASK_PRIORITY = 50, // don't change it
+  AD_TASK_PRIO_START,
+  AD_TASK_PRIO_END = 60,
+  AP_OTA_MON_TASK_PRIORITY,  
+  TRANSPORT_SHELL_TASK_PRIORITY = 62,
+  //SYS_CONSOLE_PRIORITY = 62,
+  LOWEST_TASK_PRIORITY = 63,
+}task_priority_t;
+
+/*!
+   Task stack size
+  */
+#define SYS_FP_SCAN_TASK_STKSIZE     (4 * KBYTES)
+#define SYS_INIT_TASK_STKSIZE        (4 * KBYTES)
+#define SYS_TIMER_TASK_STKSIZE       (4 * KBYTES)
+#define SYS_CONSOLE_TASK_STKSIZE       (4 * KBYTES)
+#define AP_FRM_TASK_STKSIZE          (16 * KBYTES)
+#define UI_FRM_TASK_STKSIZE          (16 * KBYTES)
+
+#define AP_TIME_TASK_STKSIZE         (16 * KBYTES)
+#define AP_UIO_TASK_STKSIZE          (16 * KBYTES)
+#define AP_PLAYBACK_TASK_STKSIZE     (16 * KBYTES)
+#define AP_CA_TASK_STKSIZE           (16 * KBYTES)
+#define AP_SCAN_TASK_STKSIZE         (16 * KBYTES)
+#define AP_MULTI_PIC_TASK_STKSIZE    (16 * KBYTES)
+#define AP_EPG_TASK_STKSIZE          (24 * KBYTES)
+#define AP_UPGRADE_TASK_STKSIZE      (16 * KBYTES)
+#define AP_SATCODX_TASK_STKSIZE      (16 * KBYTES)
+#define AP_OTA_TASK_STKSIZE          (16 * KBYTES)
+#define AP_SIGN_MON_TASK_STKSIZE     (16 * KBYTES)
+#define AP_PICTURE_TASK_STKSIZE      (32 * KBYTES)
+#define AP_BROWSE_TASK_STKSIZE         (16 * KBYTES)
+
+#define DRV_SMC_TASK_STKSIZE         (8 * KBYTES)
+
+#define MDL_SUBT_TASK_STKSIZE        (24 * KBYTES)
+#define MDL_DVB_TASK_STKSIZE         (64 * KBYTES)
+#define MDL_NIM_CTRL_TASK_STKSIZE    (8 * KBYTES)
+#define MDL_VBI_TASK_STKSIZE         (24 * KBYTES)
+#define MDL_CA_TASK_STKSIZE          (64 * KBYTES) 
+#define MDL_DM_MONITOR_TASK_STKSIZE  (32 * KBYTES)
+#define MDL_MONITOR_TASK_STKSIZE  (10 * KBYTES)
+
+#define TRANSPORT_SHELL_TASK_STKSIZE (4 * KBYTES)
+
+/*!
+   Datamanager configuration
+  */
+#ifdef CHIP
+#define DM_MAX_BLOCK_NUM             (64)
+#else
+#define DM_MAX_BLOCK_NUM             (64)
+#endif
+
+
+/*!
+   Customer configs related definitions
+  */
+#define RC_KEY_MAP_OFFSET        0
+#define PANEL_KEY_MAP_OFFSET     128
+#define SDRAM_PARA_OFFSET        168
+#define MISC_PARA_OFFSET         188
+#define PANEL_HW_INFO_OFFSET     388
+#define LED_BITMAP_OFFSET        428
+#define MAX_LED_BITMAP_LEN       200
+#define OTA_PRIVATE_KEY_OFFSET   628
+#define MAX_PRIVATE_KEY_LEN      200
+
+
+//gpio config
+#define SCART_GPIO_OUTPUT_MODE 9
+#define SCART_GPIO_ASPECT_MODE 5
+#define SCART_GPIO_VCR_INPUT 63
+#define SCART_GPIO_TV_MASTER 32
+#define SCART_GPIO_VCR_DETECT 63
+
+/*!
+   Other configuration
+  */
+#define TELTEXT_MAX_PAGE_NUM_1    100
+#define TELTEXT_MAX_PAGE_NUM_2    28
+#define GPIO_HW_MUTE (23)
+#define CA_DATA_SIZE (64 * KBYTES)
+
+//#define DM_HDR_START_ADDR           0x80000
+#define DM_MAX_DATA_LEN             (2*KBYTES)
+
+#if (SYS_FLASH_TOTALT_SIZE == SYS_FLASH_TOTALT_SIZE_8M)
+#define CHARSTO_SIZE            (8 * MBYTES)
+#define FLASH_BOOT_ADRR_DM 0x40000
+#define FLASH_LOGIC_ADRR_DM 0x80000
+#elif(SYS_FLASH_TOTALT_SIZE == SYS_FLASH_TOTALT_SIZE_4M)
+#define CHARSTO_SIZE            (4 * MBYTES)
+#ifdef OTA_DM_ON_STATIC_FLASH
+#define FLASH_BOOT_ADRR_DM 0x40000
+#else
+#define FLASH_BOOT_ADRR_DM 0x30000
+#endif
+
+#define FLASH_LOGIC_ADRR_DM 0x80000
+#elif(SYS_FLASH_TOTALT_SIZE == SYS_FLASH_TOTALT_SIZE_2M)
+#define CHARSTO_SIZE            (2 * MBYTES)
+
+#ifdef OTA_DM_ON_STATIC_FLASH
+#define FLASH_BOOT_ADRR_DM 0x40000
+#else
+#define FLASH_BOOT_ADRR_DM 0x40000
+#endif
+
+
+#define FLASH_LOGIC_ADRR_DM 0x80000
+#else
+#define CHARSTO_SIZE            (4 * MBYTES)
+
+#ifdef OTA_DM_ON_STATIC_FLASH
+#define FLASH_BOOT_ADRR_DM 0x40000
+#else
+#define FLASH_BOOT_ADRR_DM 0x40000
+#endif
+
+
+#define FLASH_LOGIC_ADRR_DM 0x80000
+#endif
+/**boot:0~0x20000  static save date 0x20000 static save back date 0x3000***/
+
+
+
+
+#define DISPLAY_LOGO_ON_BOOT 1
+
+  #ifndef OTA_DM_ON_STATIC_FLASH
+#define FLASH_LOGIC_ADRR_BOOT_STATUS  0X20000//128 *1024
+#endif
+
+#define UPGRADE_DATA_PID_MAX   8191 
+/*!
+  system test console
+  */
+#define TEST_FRAMEWORK
+
+/*!
+  DVBS OTA TDI info definition
+*/
+typedef struct
+{
+  u32 oui;
+  u16 manufacture_id;
+  u16 hw_mod_id;
+  u16 sw_mod_id;
+  u16 hw_version;
+  u16 sw_version; /**note:don't need to revert_endian_16**/
+  u16 reserved1;
+  u32 reserved;
+}ota_tdi_tmp_t;
+
+typedef struct 
+{
+  char debug_info;
+  char sig_str_ratio;
+  char sig_str_max;
+  char sig_qua_max;
+  char str_l_qua;
+  unsigned int str_0_gain;
+  char bs_times;
+  char spi_clk;
+  char rd_mode;
+  char standby_mode;
+  char watchdog_mode;
+  char str_poweron[10];
+  char str_standby[10];
+  char str_sw_version[20]; 
+  char str_hw_version[20];
+  char str_last_upgrade_date[20];
+  ota_tdi_tmp_t ota_tdi;
+}misc_options_t;
+
+#endif // End for __SYS_CFG_H_
+

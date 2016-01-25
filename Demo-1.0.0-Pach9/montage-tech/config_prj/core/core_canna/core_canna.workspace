@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="core_canna_drv_open/core_canna_drv_open.cbp" active="1" />
+		<Project filename="core_canna_mdl_ap_open/core_canna_mdl_ap_open.cbp" />
+		<Project filename="core_canna_except_open/core_canna_except_open.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

@@ -1,0 +1,4 @@
+echo f|xcopy /y /i Patch_1.12\libcore_canna_drv.a "D:\work\1521\HM1521\Demo-1.0.0-Pach9\montage-tech\Jazz_SDK_1.0"\config_prj\core\core_canna\libcore_canna_drv.a
+echo f|xcopy /y /i Patch_1.12\libcore_canna.a "D:\work\1521\HM1521\Demo-1.0.0-Pach9\montage-tech\Jazz_SDK_1.0"\lib\jazz\libcore_canna.a
+echo f|xcopy /y /i Patch_1.12\x86_prebuild_lib.lib "D:\work\1521\HM1521\Demo-1.0.0-Pach9\montage-tech\Jazz_SDK_1.0"\lib\win32\x86_prebuild_lib.lib
+echo f|xcopy /y /i Patch_1.12\x86_prebuild_open.lib "D:\work\1521\HM1521\Demo-1.0.0-Pach9\montage-tech\Jazz_SDK_1.0"\lib\win32\x86_prebuild_open.lib
